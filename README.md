@@ -5,6 +5,8 @@ The Inception project from 42 School is a DevOps-oriented project designed to te
 
 ## Usage
 
+```$bla_bla ```
+
 ## Subject Requiremnets
 - All the files required for the configuration of your project must be placed in a srcs folder
 - A Makefile is also required and must be located at the root of your directory. It must set up your entire application (i.e., it has to build the Docker images using docker-compose.yml).
