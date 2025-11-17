@@ -1,1 +1,11 @@
-#must set up your entire application (i.e., it has to build the Docker images using docker-compose.yml).
+all : up
+
+up : @docker-compose -f ./srcs/docker-compose.yml up -d
+
+down : @docker-compose -f ./srcs/docker-compose.yml down
+
+stop : @docker-compose -f ./srcs/docker-compose.yml stop
+
+start : @docker-compose -f ./srcs/docker-compose.yml start
+
+status : @docker ps
