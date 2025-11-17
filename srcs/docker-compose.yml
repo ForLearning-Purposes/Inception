@@ -9,8 +9,22 @@ services:
     networks:
       - inception
 
+#wordpress
+  wordpress:
+    build: ./requirements/wordpress
+    container_name: wordpress
+    restart: always
+    env_file: .env
+    depends_on:
+      - mariadb
+    volumes:
+      - wordpress_data:/var/www/html
+    networks:
+      - inception
+
 volumes:
   mariadb_data:
+  wordpress_data:
 
 networks:
   inception:
