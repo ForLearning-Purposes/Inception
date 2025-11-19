@@ -1,26 +1,39 @@
 services:
   mariadb:
-    build: ./requirements/mariadb
+    build:
+      context: ./requirements/mariadb
+      dockerfile: Dockerfile
+    image: mariadb
     container_name: mariadb
-    restart: always
+    restart: on-failure
     env_file: .env
+    networks:
+      - inception
     volumes:
       - mariadb_data:/var/lib/mysql
-    networks:
-      - inception
+    healthcheck:
+      # use absolute path and socket; allow more time for init
+      test: ["CMD", "/usr/bin/mysqladmin", "ping", "-S", "/run/mysqld/mysqld.sock"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 120s
 
-#wordpress
   wordpress:
-    build: ./requirements/wordpress
+    build:
+      context: ./requirements/wordpress
+      dockerfile: Dockerfile
+    image: wordpress
     container_name: wordpress
-    restart: always
+    restart: on-failure
     env_file: .env
     depends_on:
-      - mariadb
-    volumes:
-      - wordpress_data:/var/www/html
+      mariadb:
+        condition: service_healthy
     networks:
       - inception
+    volumes:
+      - wordpress_data:/var/www/html
 
 volumes:
   mariadb_data:
@@ -28,3 +41,4 @@ volumes:
 
 networks:
   inception:
+    driver: bridge
