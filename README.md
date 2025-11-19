@@ -58,6 +58,7 @@ or TLSv1.3 protocol.
 ### Q&A
 - A Docker container is not a virtual machine. Thus, it is not recommended to use any hacky patches based on ’tail -f’ and similar methods when trying to run it. Read about how daemons work and whether it’s a good idea to use them or not.
 - Your volumes will be available in the /home/login/data folder of the host machine using Docker. Of course, you have to replace the login with yours.
+- What is local socket and hostname
 
 ## TO-DO
 
