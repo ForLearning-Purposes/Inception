@@ -10,9 +10,15 @@ stop :
 	@docker compose -f ./srcs/docker-compose.yml stop
 
 start :
-	@docker compose -f ./srcs/docker-compose.yml start
+	@docker compose -f ./srcs/docker-compose.yml startall : up
 
 status :
 	@docker ps
 
-fclean: down
+clean: down
+	@docker system prune -f
+
+fclean: clean
+	@docker system prune -af
+
+.PHONY: all up down stop start status clean fclean

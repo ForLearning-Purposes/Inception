@@ -3,9 +3,8 @@ services:
     build:
       context: ./requirements/mariadb
       dockerfile: Dockerfile
-    image: mariadb
     container_name: mariadb
-    restart: on-failure
+    restart: always
     env_file: .env
     networks:
       - inception
@@ -23,9 +22,8 @@ services:
     build:
       context: ./requirements/wordpress
       dockerfile: Dockerfile
-    image: wordpress
     container_name: wordpress
-    restart: on-failure
+    restart: always
     env_file: .env
     depends_on:
       mariadb:
@@ -34,6 +32,30 @@ services:
       - inception
     volumes:
       - wordpress_data:/var/www/html
+    healthcheck:
+      test: ["CMD", "php-fpm8.2", "-t"]
+      interval: 5s
+      timeout: 3s
+      retries: 10
+      start_period: 10s
+
+  nginx:
+    build:
+      context: ./requirements/nginx
+      dockerfile: Dockerfile
+    container_name: nginx
+    restart: always
+    env_file: .env
+    depends_on:
+      wordpress:
+        condition: service_healthy
+    networks:
+      - inception
+    volumes:
+      - wordpress_data:/var/www/html
+    ports:
+      - "443:443"
+
 
 volumes:
   mariadb_data:
