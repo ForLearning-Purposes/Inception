@@ -25,6 +25,12 @@ RUN mkdir -p /run/php && chown -R www-data:www-data /run/php
 # Create WordPress working directory
 RUN mkdir -p /var/www/html && chown -R www-data:www-data /var/www/html
 
+# wp-cli
+RUN curl -L https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar \
+    -o /usr/local/bin/wp \
+    && chmod +x /usr/local/bin/wp \
+    && wp --info --allow-root
+
 # Copy php-fpm pool configuration for WordPress
 COPY conf/www.conf /etc/php/8.2/fpm/pool.d/www.conf
 
