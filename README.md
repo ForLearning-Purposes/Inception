@@ -1,66 +1,79 @@
-# Inception
-
-The Inception project from 42 School is a DevOps-oriented project designed to teach students about containerization and system administration. The goal is to set up a small infrastructure using Docker Compose, where you build and configure multiple containers (typically Nginx, WordPress, and MariaDB) to work together in a secure and efficient way.
+*This project has been created as part of the 42 curriculum by [msimic](https://profile.intra.42.fr/users/msimic).*
 
 
-## Usage
+# Description
 
-```$bla_bla ```
+Inception is a project where we build and run a PHP-based website using a containerized service architecture with Docker.
 
-## Subject Requiremnets
-- All the files required for the configuration of your project must be placed in a srcs folder
-- A Makefile is also required and must be located at the root of your directory. It must set up your entire application (i.e., it has to build the Docker images using docker-compose.yml).
-- ou must use Docker Compose
-- Each Docker image must have the same name as its corresponding service
-- Each service has to run in a dedicated container.
-- The containers must be built from either the penultimate stable version of Alpine or Debian.
-- You also have to write your own Dockerfiles, one per service. The Dockerfiles must be called in your docker-compose.yml by your Makefile.
--  must build the Docker images for your project yourself. It is then forbid-den to pull ready-made Docker images or use services such as DockerHub (Alpine/Debian being excluded from this rule).
+The goal of the project is to understand how a web application is deployed using separate services, where each part of the system runs in its own Docker container. These services communicate with each other through a Docker network.
 
-You then have to set up:
-- A Docker container that contains NGINX with TLSv1.2 or TLSv1.3 only.
-- A Docker container that contains WordPress with php-fpm (it must be installed and configured) only, without nginx.
-- A Docker container that contains only MariaDB, without nginx.
-- A volume that contains your WordPress database.
-- A second volume that contains your WordPress website files.
-- A docker-network that establishes the connection between your containers.
+The project includes:
+- NGINX as a secure web server (TLS 1.2 / 1.3)
+- WordPress (PHP-FPM) as the web application
+- MariaDB as the database
 
-Your containers must restart automatically in case of a crash
----
+Each service is built from a custom Dockerfile, runs in its own container, and has a single responsibility.
+The whole infrastructure runs inside a virtual machine, and NGINX is the only public entry point exposed on port 443.
 
-- Of course, using network: host or --link or links: is forbidden. The network line must be present in your docker-compose.yml file. Your containers must not be started with a command running an infinite loop. Thus, this also applies to any command used as entrypoint, or used in entrypoint scripts. The following are a few prohibited hacky patches: tail -f, bash, sleep infinity, while true.
+This project focuses on service isolation, container networking, security, and persistent data management using Docker.
 
-- To simplify the process, you must configure your domain name to point to your local IP address. This domain name must be login.42.fr. Again, you must use your own login. For example, if your login is ’wil’, wil.42.fr will redirect to the IP address pointing to Wil’s website.
+# Instructions
 
-```
-The latest tag is prohibited.
-Passwords must not be present in your Dockerfiles.
-The use of environment variables is mandatory.
-It is also strongly recommended to use a .env file to store
-environment variables and to use the Docker secrets to store any
-confidential information.
-Your NGINX container must be the sole entry point into your
-infrastructure, accessible only via port 443, using the TLSv1.2
-or TLSv1.3 protocol.
+### Requirements
+
+- Linux Virtual Machine
+- Docker
+- Docker Compose
+- Make
+
+### Build and Run
+
+1. Clone the repository:
+
+```sh
+$ git clone <repository_url> <repo-name>
+$ cd <repo-name>
 ```
 
-#### Dockerfiles
+2. Configure environment variables: !!! ADD HERE MORE DETAILS !!!
 
-### WordPres
-- In your WordPress database, there must be two users, one of them being the admin-istrator. The administrator’s username must not contain ’admin’, ’Admin’, ’admin-istrator’, or ’Administrator’ (e.g., admin, administrator, Administrator, admin-123, etc.).
+    - Create and edit the .env file inside the srcs directory.
+    - Set the domain name and database credentials.
 
-### MariaDB
+3. Build and start the infrastructure:
 
-### NGINX
+```sh
+$ make
+```
 
-## Good to Know
+This command builds all Docker images and starts the containers using 4. Docker Compose.
 
-### Q&A
-- A Docker container is not a virtual machine. Thus, it is not recommended to use any hacky patches based on ’tail -f’ and similar methods when trying to run it. Read about how daemons work and whether it’s a good idea to use them or not.
-- Your volumes will be available in the /home/login/data folder of the host machine using Docker. Of course, you have to replace the login with yours.
-- What is local socket and hostname
+4. Access the website (Click on the link below):
+    - [https://msimic.42.fr](https://msimic.42.fr)
 
-## TO-DO
+5. Stop the infrastructure
 
-- Read about PID 1 and the best practices for writing Dockerfiles
-- Read about how daemons work
+```sh
+make down
+```
+
+# Resources
+Below are links to official documentation and reference materials related to Docker, Docker Compose, NGINX, WordPress, and MariaDB, which were used to understand and build this project.
+
+### Technical Resources
+
+- [Docker Docs](https://docs.docker.com)
+- [Docker Compose](https://docs.docker.com/compose)
+- [MariaDB Docs](https://mariadb.com/docs)
+- [NGINX Docs](https://nginx.org/en/docs/beginners_guide.html)
+- []()
+
+### AI Usage
+
+AI tools were used to:
+
+- Understand Docker, Docker Compose, and container networking concepts
+- Help structure configuration files and documentation
+- Clarify system administration concepts and best practices
+
+All AI-generated content was reviewed, adapted, and fully understood before being used in the project.
