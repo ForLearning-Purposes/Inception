@@ -11,7 +11,7 @@ services:
     networks:
       - inception
     volumes:
-      - mariadb_data:/var/lib/mysql
+      - /home/msimic/data/mariadb:/var/lib/mysql
     healthcheck:
       # use absolute path and socket; allow more time for init
       test: ["CMD", "/usr/bin/mysqladmin", "ping", "-S", "/run/mysqld/mysqld.sock"]
@@ -35,7 +35,7 @@ services:
     networks:
       - inception
     volumes:
-      - wordpress_data:/var/www/html
+      - /home/msimic/data/wordpress:/var/www/html
     healthcheck:
       test: ["CMD", "php-fpm8.2", "-t"]
       interval: 5s
