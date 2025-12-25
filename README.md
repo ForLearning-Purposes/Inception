@@ -17,6 +17,13 @@ The whole infrastructure runs inside a virtual machine, and NGINX is the only pu
 
 This project focuses on service isolation, container networking, security, and persistent data management using Docker.
 
+### Common Terms and Differences
+
+- **Virtual Machines vs Docker**: Docker containers are lightweight and share the host OS kernel, making them faster to start and more resource-efficient compared to virtual machines, which emulate entire operating systems.
+- **Secrets vs Environment Variables**: Secrets provide a more secure way to manage sensitive data like passwords, as they are encrypted and not exposed in plain text like environment variables.
+- **Docker Network vs Host Network**: Docker networks allow for better isolation and control over inter-container communication, whereas the host network directly exposes containers to the host's network stack, reducing isolation.
+- **Docker Volumes vs Bind Mounts**: Docker volumes are managed by Docker and are better suited for persistent data storage, while bind mounts directly map host directories, offering more flexibility but less abstraction.
+
 # Instructions
 
 ### Requirements
@@ -77,3 +84,7 @@ AI tools were used to:
 - Clarify system administration concepts and best practices
 
 All AI-generated content was reviewed, adapted, and fully understood before being used in the project.
+
+---
+
+*Last updated: 2025-12-25*
